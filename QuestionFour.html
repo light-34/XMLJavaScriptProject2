@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <br>
+    <label for="txt">Enter a Country Name</label>
+    <input type="text" id="txt">
+    <button type="button" onclick="loadCountry()">Click</button>
+    <br><br>
+
+    <p id="tab"></p>
+
+
+    <script>
+        function loadCountry() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    countryInfo(this);
+                }
+            };
+            xhttp.open("GET", "country-data.json", true);
+            xhttp.send();
+        }
+        function countryInfo(json) {
+            var jsonDoc = json.responseText;
+            var myObj = JSON.parse(jsonDoc);
+            console.log(myObj);
+            var inputData = document.getElementById('txt').value;
+
+            var output = "<table border='1'>"
+            output += "<tr> <th>REGION</th> <th>CAPITAL</th> <th>CURRENCY CODE</th> <th>LANGUAGE</th> </tr>";
+
+            for (let index = 0; index < myObj.length; index++) {
+                if (inputData == myObj.name) {
+                    output += "<tr>";
+                    //Shows value of the title
+                    output += "<td>" + myObj[index].region + "</td>";
+                    output += "<td>" + myObj[index].capital + "</td>";
+                    output += "<td>" + myObj[index].currencies.code + "</td>";
+                    output += "<td>" + myObj[index].languages.nativeName + "</td>";
+                    output += "</tr>";
+
+                }
+                else {
+                    output += "<tr>";
+                    output += "<td> There is no Data </td>";
+                    output += "</tr>";
+                }
+                output += "</table>"
+
+                //Display data   
+                document.getElementById("tap").innerHTML = output;
+
+            }
+
+
+        }
+
+    </script>
+
+</body>
+
+</html>

@@ -40,8 +40,19 @@
                 //Shows value of the title
                 output += "<td>" + name[index].innerHTML + "</td>";
                 output += "<td>" + country[index].getAttribute('capital') + "</td>";
-                output += "<td>" + unemp[index].innerHTML + "</td>";
-                output += "<td>" + gdp[index].innerHTML + "</td>";
+                if (typeof unemp[index] != "undefined") {
+                    output += "<td>" + unemp[index].innerHTML + "</td>";
+
+                } else {
+                    output += "<td> undefined  </td>";
+                }
+                if(typeof gdp[index] != "undefined") {
+                    output += "<td>" + gdp[index].innerHTML + "</td>";
+
+                } else {
+                    output += "<td> undefined  </td>";
+                }
+                   
                 output += "</tr>";
             }
             output += "</table>"

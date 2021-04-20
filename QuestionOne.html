@@ -1,12 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
-    
+    <p id="tap"> </p> <!-- html element to hold all table information -->
+    <script>
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = handler;
+        xhttp.open("GET", "Country.xml", true);
+        xhttp.send();
+        function handler() {
+            if (this.readyState == 4 && this.status == 200) {
+                getCountryData();
+            }
+        }
+
+        function getCountryData() {
+            var xmlInfo = xhttp.responseXML;
+            console.log(xmlInfo);
+            var country = xmlInfo.getElementsByTagName('country');
+            var name = xmlInfo.getElementsByTagName('name');
+            var unemp = xmlInfo.getElementsByTagName('unemployment');
+            var gdp = xmlInfo.getElementsByTagName('gdp_total');
+            
+
+            var output = "<table border='1'>"
+
+            output += "<tr> <th>COUNTRY NAME</th> <th>CAPITAL</th> <th>UNEMPLOYMENT</th> <th>Total GDP</th> </tr>";
+
+            for (let index = 0; index < country.length; index++) {
+                output += "<tr>";
+
+                //Shows value of the title
+                output += "<td>" + name[index].innerHTML + "</td>";
+                output += "<td>" + country[index].getAttribute('capital') + "</td>";
+                output += "<td>" + unemp[index].innerHTML + "</td>";
+                output += "<td>" + gdp[index].innerHTML + "</td>";
+                output += "</tr>";
+            }
+            output += "</table>"
+
+            //Display data   
+            document.getElementById("tap").innerHTML = output;
+        }
+
+    </script>
+
 </body>
+
 </html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script>
+
+        // This function is designed to pull data from openWeatherMap for Toronto
+        function loadInfo() {
+            $(document).ready(function () {
+            
+                //Read JSON data
+                $.getJSON("https://restcountries.eu/rest/v2/all", function (result) {
+                    var inputData = document.getElementById('txt').value;
+
+                    //For each loop to read json data and get desired information
+                    $.each(result, function (x, y) {
+                        //Conditional for filtering the data
+                        if (inputData == y.name) {
+
+                            //Show results in a html file
+                            $('#cName').html("<strong> Country Name :</strong><br/>" + y.name);
+                            $('#region').html("<strong> Region of Country :</strong><br/>" + y.region);
+                            $('#flag').html('<strong>Flag of Country</strong><br/>' + '<img src="' + y.flag + '"width=200 height=100 alt="' + y.name + '"/>');
+                            $('#nName').html("<strong>Native Name of Country :</strong><br/>" + y.nativeName);
+                            $('#area').html("<strong>The area of the country:</strong><br/>" + y.area);
+                            $('#cur').html("<strong>The currency of the country :</strong><br/>" + y.currencies[0].code);
+                                                        
+                            //Nested json data to get conversion of the currencies
+                            $.getJSON("http://data.fixer.io/api/latest?access_key=c9400761fc297d05e4487e215f4220e7&base=EUR", function (resCur) {
+                                console.log(resCur);
+                                $('#exchange').html("<strong>Currency Conversion based on EUR</strong><br/>" + resCur.rates[y.currencies[0].code]);
+
+                            });
+                        }
+                    });
+
+                    console.log(result);
+                });
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <br>
+    <label for="txt">Enter Country Name :</label>
+    <input type="text" id="txt">
+    <button type="button" onclick="loadInfo()">Get Information</button>
+    <br><br>
+
+    <p id="cName"></p>
+    <p id="region"></p>
+    <p id="flag"></p>
+    <p id="nName"></p>
+    <p id="area"></p>
+    <p id="cur"></p>
+    <p id="exchange"></p>
+
+
+</body>
+
+</html>

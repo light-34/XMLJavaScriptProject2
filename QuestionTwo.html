@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASN--b</title>
+</head>
+<body>
+    <p id="demo"></p>
+    <script>
+        try {
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("GET", "country-data.json", false);
+        xhttp.send();
+        var jsonData = JSON.parse(xhttp.responseText);
+        var output="";
+        output += "<table border ='6'>";
+        //output += "<th bgcolor ='yellow'>" + 'Province Name' + "</th>";
+        output += "<th bgcolor ='yellow'>" + 'Local Name' + "</th>";
+        output += "<th bgcolor ='yellow'>" + 'Population' + "</th>";
+       // output += "<th bgcolor ='yellow'>" + 'No of Cities in the Province' + "</th>";
+        var auth =jsonData.mondial.country;
+        for (i = 0; i < auth.length; i++) {
+            output += "<tr>"
+
+
+            //     if(auth[i].province["-year"] == "2011"){
+            //  output += "<td>" +auth[i].population["#text"]+ "</td>";
+            //  console.log(output);
+            //  }else{
+            //   output+="<td>"+"N/A"+"</td>";  
+            //  }
+           // output += "<td>" +auth[i].province["-id"]+ "</td>";
+
+
+            
+            output += "<td>" +auth[i].name + "</td>";
+
+
+
+
+            if(auth[i].population["-year"] == "2011"){
+             output += "<td>" +auth[i].population["#text"]+ "</td>";
+             console.log(output);
+             }else{
+              output+="<td>"+"N/A"+"</td>";  
+             }
+
+
+
+
+            document.getElementById("demo").innerHTML = output;
+
+        }
+        output += "</table>";  
+    }
+        catch (e) { 
+            console.log(e);
+        }
+    </script>
+</body>
+
+</html>

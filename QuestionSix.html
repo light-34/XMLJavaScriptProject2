@@ -21,6 +21,7 @@
 
                     //For each loop to read json data and get desired information
                     $.each(result, function (x, y) {
+                         
                         //Conditional for filtering the data
                         if (inputData == y.name) {
 
@@ -38,6 +39,10 @@
                                 $('#exchange').html("<strong>Currency Conversion based on EUR</strong><br/>" + resCur.rates[y.currencies[0].code]);
 
                             });
+
+                            for (let i = 0; i < y.borders.length; i++) {
+                                $('#border').text(y.borders + " ");
+                            }
                         }
                     });
 
@@ -62,6 +67,7 @@
     <p id="area"></p>
     <p id="cur"></p>
     <p id="exchange"></p>
+    <p id="border"></p>
 
 
 </body>

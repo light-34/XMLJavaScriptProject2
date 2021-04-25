@@ -1,64 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ASN--b</title>
 </head>
+
 <body>
-    <p id="demo"></p>
     <script>
-        try {
+
         var xhttp = new XMLHttpRequest();
-        xhttp.open("GET", "country-data.json", false);
+
+        xhttp.open("GET", "Country.json", false);
+
         xhttp.send();
+
         var jsonData = JSON.parse(xhttp.responseText);
-        var output="";
-        output += "<table border ='6'>";
-        //output += "<th bgcolor ='yellow'>" + 'Province Name' + "</th>";
-        output += "<th bgcolor ='yellow'>" + 'Local Name' + "</th>";
-        output += "<th bgcolor ='yellow'>" + 'Population' + "</th>";
-       // output += "<th bgcolor ='yellow'>" + 'No of Cities in the Province' + "</th>";
-        var auth =jsonData.mondial.country;
-        for (i = 0; i < auth.length; i++) {
-            output += "<tr>"
+        console.log(jsonData);
 
+        //This method is designed for gettin information of provinces.
+        function countryInfo() {
+            var output = "";
+            output += "<table border ='1'> <tr> <th>PROVINCE NAME</th> <th>LOCAL NAME</th> <th>POPULATION(2011)</th> <th># CITIES</th></tr>";
 
-            //     if(auth[i].province["-year"] == "2011"){
-            //  output += "<td>" +auth[i].population["#text"]+ "</td>";
-            //  console.log(output);
-            //  }else{
-            //   output+="<td>"+"N/A"+"</td>";  
-            //  }
-           // output += "<td>" +auth[i].province["-id"]+ "</td>";
-
-
-            
-            output += "<td>" +auth[i].name + "</td>";
-
-
-
-
-            if(auth[i].population["-year"] == "2011"){
-             output += "<td>" +auth[i].population["#text"]+ "</td>";
-             console.log(output);
-             }else{
-              output+="<td>"+"N/A"+"</td>";  
-             }
-
-
-
-
-            document.getElementById("demo").innerHTML = output;
-
-        }
-        output += "</table>";  
-    }
-        catch (e) { 
-            console.log(e);
+            var inputCountry = document.getElementById('txt').value;
+            //loop to get country data
+            for (i = 0; i < jsonData.mondial.country.length; i++) {
+                //condition to compare countries in json file and text field
+                if (jsonData.mondial.country[i].name == inputCountry) {
+                    //condition to find out existance of province
+                    if (typeof jsonData.mondial.country[i].province != "undefined") {
+                        //loop to get province name and local name
+                        for (let j = 0; j < jsonData.mondial.country[i].province.length; j++) {
+                            output += "</tr> <td>" + jsonData.mondial.country[i].province[j].name + "</td>";
+                            //condition to find local name
+                            if (typeof jsonData.mondial.country[i].province[j].localname != "undefined") {
+                                output += "<td>" + jsonData.mondial.country[i].province[j].localname + "</td>";
+                            }
+                            else {
+                                output += "<td> Local Name Undefined </td>";
+                            }
+                            //loop to get poupulation information
+                            for (let k = 0; k < jsonData.mondial.country[i].province[j].population.length; k++) {
+                                if (jsonData.mondial.country[i].province[j].population[k]["-year"] == 2011) {
+                                    output += "<td>" + jsonData.mondial.country[i].province[j].population[k]["#text"] + "</td>";
+                                }
+                                else if (jsonData.mondial.country[i].province[j].population.length - 1 == k) {
+                                    output += "<td> No populatio data </td>";
+                                }
+                            }
+                            //condition to get number of cities
+                            if (jsonData.mondial.country[i].province[j].city.length > 1) {
+                                output += "<td>" + jsonData.mondial.country[i].province[j].city.length + "</td>";
+                            } else {
+                                output += "<td> 1 </td>";
+                            }
+                            output += "</tr>";
+                        }
+                    } else {
+                        output += "<tr><td> No Province information identified </td></tr>";
+                    }
+                }
+            }
+            output += "</table>";
+            document.getElementById('demo').innerHTML = output;
         }
     </script>
+
+    <br>
+    <label for="txt">Enter Country Name :</label>
+    <input type="text" id="txt">
+    <button type="button" onclick="countryInfo()">Get Information</button>
+    <br><br>
+    <p id="demo"></p>
+
 </body>
 
 </html>

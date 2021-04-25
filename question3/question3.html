@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head> <title> ITC5202 - Project </title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+<body>
+
+<h1>RATES AND BASE</h1>
+
+<button type="button">CLICK</button>
+<br><br>
+<p id="demo"></p>
+
+<script>
+  var output = "";
+
+  $(document).click(function () {
+    $.ajax({
+      url:
+
+        "http://data.fixer.io/api/latest?access_key=f886c5b2e1a1db1ced4bba752ccf7ac9&base=EUR",
+      
+       
+      success: function (result) {
+        console.log(result);
+       
+
+        output +=
+          "<table border=1><tr bgcolor ='yellow'><th>Country </th><th> Rate</th></tr>";
+        $.each(result.rates, function (Country, Rate) {
+          output += "<tr>";
+          output += "<td>" + Country + "</td>";
+          output += "<td>" + Rate + "</td>";
+          output += "</tr>";
+        });
+        output += "</table>";
+        $("#demo").html(output);
+      },
+      error: function () {
+        alert("Error!");
+      },
+    });
+  });
+</script>
+
+</body>
+</html>

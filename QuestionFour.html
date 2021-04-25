@@ -27,19 +27,19 @@
 
         //4. Convert data into JSON
         var myObj = JSON.parse(xhttp.responseText);
-        
-        
+
+        //This method is designed to extract desired information
         function countryInfo() {
-            var inputData = document.getElementById('txt').value;
+            var inputData = document.getElementById('txt').value; //Get value at the text area
             console.log(myObj);
-            console.log(inputData);
+            
             var output = "<table border='1'>";
             output += "<tr> <th>REGION</th> <th>CAPITAL</th> <th>CURRENCY CODE</th> <th>LANGUAGE</th> </tr>";
-
+            // loop is used to get data of all countries in json file
             for (let index = 0; index < myObj.length; index++) {
-                console.log("for is working");
+                
                 if (myObj[index].name === inputData) {
-                    console.log("if is working");
+                    
                     output += "<tr>";
                     //Shows value of the title    
                     output += "<td>" + myObj[index].region + "</td>";
@@ -48,12 +48,12 @@
                     output += "<td>" + myObj[index].languages[0].nativeName + "</td>";
                     output += "</tr>";
                 }
-                
+
             }
             output += "</table>";
 
-                //Display data   
-                document.getElementById("tab").innerHTML = output;
+            //Display data   
+            document.getElementById("tab").innerHTML = output;
         }
 
     </script>

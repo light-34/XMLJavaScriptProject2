@@ -1,0 +1,16 @@
+body{
+   background-image: url("6.jpg");
+	padding: 20px;
+	text-align: center;
+	color: black !important;
+	font-family: 'Montserrat','sans-serif' !important;
+	background-size: 100% ;
+    
+}
+table{
+	background-color: aliceblue;
+	margin-left: 40%;
+}
+/* tr { display: block; float: left; } */
+th, td { border: 2px solid rgb(182, 228, 241); }
+
